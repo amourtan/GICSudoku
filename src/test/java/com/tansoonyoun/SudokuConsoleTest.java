@@ -61,6 +61,18 @@ class SudokuConsoleTest {
         assertEquals(2, output.lines().filter("Here is your puzzle:"::equals).count());
     }
 
+    @Test
+    void matchesTheTranscriptLayoutOfTheProblemStatement() throws IOException {
+        String prompt = "Enter command (e.g., A3 4, C5 clear, hint, check, quit):";
+        String raw = run("A3 4\nA1 6\ncheck\n");
+        assertFalse(raw.replace(System.lineSeparator(), "").contains("\n"));
+        String output = raw.replace(System.lineSeparator(), "\n");
+        assertTrue(output.contains(prompt + "\n\nMove accepted.\n\nCurrent grid:\n    1 2 3 4 5 6 7 8 9\n"
+                + "  A 5 3 4 _ 7 _ _ _ _\n"));
+        assertTrue(output.contains(prompt + "\n\nInvalid move. A1 is pre-filled.\n\nCurrent grid:\n"));
+        assertTrue(output.contains("  I _ _ _ _ 8 _ _ 7 9\n\n" + prompt + "\nNo rule violations detected.\n"));
+    }
+
     private static String run(String commands) throws IOException {
         var output = new StringWriter();
         new SudokuConsole(new BufferedReader(new StringReader(commands)),

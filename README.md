@@ -31,6 +31,6 @@ Conflicting digits in editable cells are accepted so you can work through a puzz
 
 ## Design
 
-The console handles line input and display. `SudokuGame` protects the original clues and manages the player's entries; `SudokuRules` checks for duplicates. `PuzzleGenerator` creates a randomized solved grid, then removes clues in shuffled order. Backtracking verifies uniqueness after each removal and stops counting at two solutions. If one removal pass cannot reach exactly 30 clues, the generator starts over. There is no difficulty setting or external Sudoku library.
+The console handles line input and display. `Main` writes in the terminal's own encoding, and prints `3x3` instead of `3×3` when the terminal cannot display `×`. `SudokuGame` protects the original clues and manages the player's entries; `SudokuRules` checks for duplicates. `PuzzleGenerator` creates a randomized solved grid, then removes clues in shuffled order. Backtracking verifies uniqueness after each removal and stops counting at two solutions. If one removal pass cannot reach exactly 30 clues, the generator starts over. There is no difficulty setting or external Sudoku library.
 
 The JUnit suite covers move validation, duplicate reporting, hints, the win condition, generation, and scripted console sessions.

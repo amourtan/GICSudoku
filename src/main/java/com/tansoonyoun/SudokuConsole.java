@@ -33,7 +33,8 @@ final class SudokuConsole {
     private boolean play(SudokuGame game) throws IOException {
         printGrid("Here is your puzzle:", game);
         while (true) {
-            output.println("\nEnter command (e.g., A3 4, C5 clear, hint, check, quit):");
+            output.println();
+            output.println("Enter command (e.g., A3 4, C5 clear, hint, check, quit):");
             String line = input.readLine();
             if (line == null) {
                 return false;
@@ -49,7 +50,8 @@ final class SudokuConsole {
                         () -> output.println("No hint needed."));
                 default -> {
                     if (edit(command, game) && game.isComplete()) {
-                        output.println("\nYou have successfully completed the Sudoku puzzle!");
+                        output.println();
+                        output.println("You have successfully completed the Sudoku puzzle!");
                         return true;
                     }
                 }
@@ -77,6 +79,7 @@ final class SudokuConsole {
         boolean clear = value.equals("clear");
         SudokuGame.MoveResult result = clear ? game.clear(cell)
                 : game.place(cell, value.matches("[1-9]") ? value.charAt(0) - '0' : EMPTY);
+        output.println();
         switch (result) {
             case ACCEPTED -> output.println(clear ? "Cell cleared." : "Move accepted.");
             case PRE_FILLED -> output.println("Invalid move. " + cellLabel(cell) + " is pre-filled.");
